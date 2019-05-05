@@ -1,0 +1,50 @@
+<div class="titulo-user col-5">
+	<img src="<%= @user.photo.normal %>" class="foto_usuario"> 
+	<h2><%= @user.name %></h2>
+</div>
+<br>
+
+<% if user_signed_in? && @following %>
+	<%=link_to "Dejar de seguir a #{@user.name}", destroy_contacts_path(@user.id), method: :delete, :class => 'btn btn-info' %>
+<% elsif user_signed_in? && @user.id != current_user.id %>
+	<%=link_to "Seguir a #{@user.name}", contacts_path(@user.id), method: :post, :class => 'btn btn-info' %>
+<% end %>
+
+<br><br>
+<hr>
+
+<% @categories.each do |category| %>
+	<% @activities.each do |useract| %>
+		<% if useract.activity.category_id == category.id %>
+			<h5><%= category.sustantivo %> que <%= category.past %></h5>
+			<% @activities.each do |act| %>
+				<% if act.activity.category_id == category.id %>
+					<% if act.activity.author %>
+						<img src="<%= act.activity.photo.thumb %>" >
+						<%= link_to act.activity.name, activity_path(act.activity.id) %> de <%= act.activity.author %> | <%= category.participio %> el <%= act.start.strftime("%F") %> | registrado <%= time_ago_in_words(act.activity.created_at) %> ago 
+						<% act.actuser_photo.each do |picture| %>
+							<img src="<%= picture.photo.thumb %>" > 
+						<% end %><br>
+						
+						<% if can?(:destroy, act) %>
+							<%= link_to 'Editar', edit_user_activity_path(@user,act.activity.id) %>
+							<%= link_to 'Borrar actividad', destroy_activity_path(@user,act.activity.id), method: :delete %>
+						<% end %>
+					<% else %>
+						<img src="<%= act.activity.photo.thumb %>" >
+						<%= link_to act.activity.name, activity_path(act.activity.id) %> | <%= category.participio %> el <%= act.start.strftime("%F") %> | registrado <%= time_ago_in_words(act.activity.created_at) %> ago
+						<% if can?(:destroy, act) %>
+							<%= link_to 'Editar', edit_user_activity_path(@user,act.activity.id) %>
+							<%= link_to 'Borrar actividad', destroy_activity_path(@user,act.activity.id), method: :delete %>
+						<% end %>
+					<% end %>
+					
+					<br>
+				<% end %>
+			<% end %><br>
+			<% break %>
+		<% end %>
+	<% end %>
+<% end %>
+		
+
