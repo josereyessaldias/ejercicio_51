@@ -12,39 +12,80 @@
 
 <br><br>
 <hr>
-
-<% @categories.each do |category| %>
-	<% @activities.each do |useract| %>
-		<% if useract.activity.category_id == category.id %>
-			<h5><%= category.sustantivo %> que <%= category.past %></h5>
-			<% @activities.each do |act| %>
-				<% if act.activity.category_id == category.id %>
-					<% if act.activity.author %>
-						<img src="<%= act.activity.photo.thumb %>" >
-						<%= link_to act.activity.name, activity_path(act.activity.id) %> de <%= act.activity.author %> | <%= category.participio %> el <%= act.start.strftime("%F") %> | registrado <%= time_ago_in_words(act.activity.created_at) %> ago 
-						<% act.actuser_photo.each do |picture| %>
-							<img src="<%= picture.photo.thumb %>" > 
-						<% end %><br>
-						
-						<% if can?(:destroy, act) %>
-							<%= link_to 'Editar', edit_user_activity_path(@user,act.activity.id) %>
-							<%= link_to 'Borrar actividad', destroy_activity_path(@user,act.activity.id), method: :delete %>
+<div class="row">
+	<div class="col-6">
+		<h3>Actividades Realizadas</h3>
+		<% @categories.each do |category| %>
+			<% @act_user_realizadas.each do |useract| %>
+				<% if useract.activity.category_id == category.id %>
+					<h5><%= category.sustantivo %> que <%= category.past %></h5>
+					<% @act_user_realizadas.each do |act| %>
+						<% if act.activity.category_id == category.id %>
+							<% if act.activity.author %>
+								<img src="<%= act.activity.photo.thumb %>" >
+								<%= link_to act.activity.name, activity_path(act.activity.id) %> de <%= act.activity.author %> | <%= category.participio %> el <%= act.start.strftime("%F") %> | registrado <%= time_ago_in_words(act.activity.created_at) %> ago 
+								<% act.actuser_photo.each do |picture| %>
+									<img src="<%= picture.photo.thumb %>" > 
+								<% end %><br>
+								
+								<% if can?(:destroy, act) %>
+									<%= link_to 'Editar', edit_user_activity_path(@user,act.activity.id) %>
+									<%= link_to 'Borrar actividad', destroy_activity_path(@user,act.activity.id), method: :delete %>
+								<% end %>
+							<% else %>
+								<img src="<%= act.activity.photo.thumb %>" >
+								<%= link_to act.activity.name, activity_path(act.activity.id) %> | <%= category.participio %> el <%= act.start.strftime("%F") %> | registrado <%= time_ago_in_words(act.activity.created_at) %> ago
+								<% if can?(:destroy, act) %>
+									<%= link_to 'Editar', edit_user_activity_path(@user,act.activity.id) %>
+									<%= link_to 'Borrar actividad', destroy_activity_path(@user,act.activity.id), method: :delete %>
+								<% end %>
+							<% end %>
+							
+							<br>
 						<% end %>
-					<% else %>
-						<img src="<%= act.activity.photo.thumb %>" >
-						<%= link_to act.activity.name, activity_path(act.activity.id) %> | <%= category.participio %> el <%= act.start.strftime("%F") %> | registrado <%= time_ago_in_words(act.activity.created_at) %> ago
-						<% if can?(:destroy, act) %>
-							<%= link_to 'Editar', edit_user_activity_path(@user,act.activity.id) %>
-							<%= link_to 'Borrar actividad', destroy_activity_path(@user,act.activity.id), method: :delete %>
-						<% end %>
-					<% end %>
-					
-					<br>
+					<% end %><br>
+					<% break %>
 				<% end %>
-			<% end %><br>
-			<% break %>
+			<% end %>
 		<% end %>
-	<% end %>
-<% end %>
+	</div>
+	<div class="col-6">
+		<h3>Actividades por Realizar</h3>
+		<% @categories.each do |category| %>
+			<% @act_user_por_realizar.each do |useract| %>
+				<% if useract.activity.category_id == category.id %>
+					<h5><%= category.sustantivo %> que <%= category.past %></h5>
+					<% @act_user_por_realizar.each do |act| %>
+						<% if act.activity.category_id == category.id %>
+							<% if act.activity.author %>
+								<img src="<%= act.activity.photo.thumb %>" >
+								<%= link_to act.activity.name, activity_path(act.activity.id) %> de <%= act.activity.author %> | <%= category.participio %> el <%= act.start.strftime("%F") %> | registrado <%= time_ago_in_words(act.activity.created_at) %> ago 
+								<% act.actuser_photo.each do |picture| %>
+									<img src="<%= picture.photo.thumb %>" > 
+								<% end %><br>
+								
+								<% if can?(:destroy, act) %>
+									<%= link_to 'Editar', edit_user_activity_path(@user,act.activity.id) %>
+									<%= link_to 'Borrar actividad', destroy_activity_path(@user,act.activity.id), method: :delete %>
+								<% end %>
+							<% else %>
+								<img src="<%= act.activity.photo.thumb %>" >
+								<%= link_to act.activity.name, activity_path(act.activity.id) %> | <%= category.participio %> el <%= act.start.strftime("%F") %> | registrado <%= time_ago_in_words(act.activity.created_at) %> ago
+								<% if can?(:destroy, act) %>
+									<%= link_to 'Editar', edit_user_activity_path(@user,act.activity.id) %>
+									<%= link_to 'Borrar actividad', destroy_activity_path(@user,act.activity.id), method: :delete %>
+								<% end %>
+							<% end %>
+							
+							<br>
+						<% end %>
+					<% end %><br>
+					<% break %>
+				<% end %>
+			<% end %>
+		<% end %>
+	</div>
+</div>
+
 		
 

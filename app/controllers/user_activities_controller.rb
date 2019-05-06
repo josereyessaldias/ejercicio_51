@@ -4,6 +4,7 @@ class UserActivitiesController < ApplicationController
   @activity = UserActivity.new
   @activity.user_id = params[:user_id]
   @activity.activity_id = params[:activity_id]
+  @activity.status = params[:status]
   authorize! :create, @activity
   @activity.save
   redirect_to edit_user_activity_path(@activity.user_id,@activity.activity.id)

@@ -35,8 +35,17 @@ class PagesController < ApplicationController
 
   def user_page
     @user = User.find(params[:user_id])
-  	@activities = UserActivity.where(user_id: params[:user_id]).order(:created_at).reverse
     @categories = Category.all
+
+    @act_realizadas = UserActivity.realizadas
+    @act_user_realizadas = @act_realizadas.where(user_id: params[:user_id]).order(:created_at).reverse
+    
+    @act_pendientes = UserActivity.pendientes
+    @act_user_pendientes = @act_pendientes.where(user_id: params[:user_id]).order(:created_at).reverse
+
+    @act_por_realizar = UserActivity.por_realizar
+    @act_user_por_realizar = @act_por_realizar.where(user_id: params[:user_id]).order(:created_at).reverse
+
     if user_signed_in?
       if current_user.contacting.find_by(followed_id: @user.id) != nil
         @following = true
