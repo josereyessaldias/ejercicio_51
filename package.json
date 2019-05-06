@@ -2,6 +2,7 @@
   "name": "final",
   "private": true,
   "dependencies": {
+    "bootstrap4-datetimepicker": "^5.2.3",
     "jquery-backstretch": "^2.1.17"
   }
 }

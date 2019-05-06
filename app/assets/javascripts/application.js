@@ -13,6 +13,10 @@
 //= require jquery
 //= require jquery-backstretch
 //= require rails-ujs
+//= require tether/dist/js/tether
+//= require moment/moment
+//= require moment-timezone/moment-timezone
+//= require bootstrap4-datetimepicker/build/js/bootstrap-datetimepicker.min
 //= require activestorage
 //= require turbolinks
 //= require_tree .

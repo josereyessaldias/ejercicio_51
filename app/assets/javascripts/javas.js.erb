@@ -1,0 +1,11 @@
+document.addEventListener("turbolinks:load", function(){
+	$(".useract_fecha").on("focusin", '#event_start', function(){
+		$(this).datetimepicker(
+			{
+				format:'YYYY/MM/DD'
+			}
+
+			);
+	})
+})
+	
